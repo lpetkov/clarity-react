@@ -118,7 +118,7 @@ export type DataGridFooter = {
     className?: string;
     style?: any;
     hideShowColBtn?: boolean;
-    showFooter:boolean;
+    showFooter: boolean;
 };
 
 /**
@@ -243,6 +243,23 @@ export class DataGrid extends React.PureComponent<DataGridProps, DataGridState> 
         if (this.props.pagination !== undefined) this.setInitalStateForPagination();
     }
 
+    componentWillReceiveProps(nextProps: any) {
+        // You don't have to do this check first, but it can help prevent an unneeded render
+        //if (nextProps.rows.length !== this.state.allRows.length) {
+        console.log(nextProps);
+        const rows = this.updateRowIDs(nextProps.rows);
+        this.setState({allRows: [...rows]});
+        //}
+    }
+    /*
+    shouldComponentUpdate(nextProps:any, nextState:any) {
+        if (nextProps.rows.length !== nextState.rows.length){
+            this.setState({
+                allRows: [...nextProps.rows],
+            });
+        }
+        return true; 
+    }*/
     // Function to return all selected rows
     getSelectedRows = (): DataGridRow[] => {
         const {allRows} = this.state;
@@ -927,19 +944,17 @@ export class DataGrid extends React.PureComponent<DataGridProps, DataGridState> 
         return <HideShowColumns columns={allColumns} updateColumns={this.updateColumns} />;
     }
 
-    private buildFooterContent():React.ReactElement{
+    private buildFooterContent(): React.ReactElement {
         const {footer} = this.props;
         const {allRows, itemText} = this.state;
         const footerDescription = allRows.length.toString() + " " + itemText;
         let content;
 
-        if (footer !== undefined){
-            content =  footer.footerData !== undefined ?  footer.footerData : footerDescription;
+        if (footer !== undefined) {
+            content = footer.footerData !== undefined ? footer.footerData : footerDescription;
         }
 
-        return(
-                 <div> {content} </div>
-        );
+        return <div> {content} </div>;
     }
 
     // function to build datagrid footer
@@ -953,7 +968,7 @@ export class DataGrid extends React.PureComponent<DataGridProps, DataGridState> 
             >
                 {footer && footer.hideShowColBtn && this.buildHideShowColumnsBtn()}
                 <div className={ClassNames.DATAGRID_FOOTER_DESC}>
-                {pagination && pagination ? this.buildDataGridPagination(): this.buildFooterContent() }
+                    {pagination && pagination ? this.buildDataGridPagination() : this.buildFooterContent()}
                 </div>
             </div>
         );

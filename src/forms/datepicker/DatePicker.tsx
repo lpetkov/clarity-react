@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Icon, Direction} from "../../icon";
-import * as Moment from "moment";
+import Moment from "moment";
 import {classNames} from "../../utils";
 
 /**

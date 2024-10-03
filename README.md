@@ -1,4 +1,4 @@
-# Clarity React Binding
+# Clarity React Bindingdsadsada
 
 This project an unofficial implementation of [VMware Clarity Design](https://clarity.design) in React. It leverages CSS, icons and images from the Clarity project. 
 
